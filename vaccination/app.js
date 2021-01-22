@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk')
+var uuid = require('uuid')
 const dynamoDB = new AWS.DynamoDB.DocumentClient({
     region: 'us-east-2'
 });
@@ -7,12 +8,14 @@ const vaccinationTable = process.env.DB_Table;
 
 exports.postForm = async (event, context) => {
 
-    console.log(event);
+    console.log(event.body);
 
     const vaccinationForm = JSON.parse(event.body)
 
+    console.log("vaccination form: ", vaccinationForm);
+
     const vaccination = {
-        id: context.awsRequestId,
+        id: uuid.v4(),
         firstName: vaccinationForm.firstName,
         middle: vaccinationForm.middle,
         lastname: vaccinationForm.lastname,
@@ -35,7 +38,9 @@ exports.postForm = async (event, context) => {
 
     console.log("Before dy")
 
-    await dynamoDB.put(params, function(err, data) {
+    dynamoDB.put(params, function(err, data) {
+        console.log("Error", err);
+        console.log("Data: ", data);
         if (!err) {
             console.log("data persisting!!!");
             return {
@@ -46,6 +51,11 @@ exports.postForm = async (event, context) => {
                     "Content-Type": "application/json"
                 },
                 "body": JSON.stringify("Successfully Submitted!")
+            }
+        } else {
+            console.log("Data not persisting!!!");
+            return {
+                "body": JSON.stringify(err)
             }
         }
     });

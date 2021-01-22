@@ -21,7 +21,7 @@ Resources:
       CodeUri: vaccination/
       Handler: app.postForm
       Runtime: nodejs12.x
-      Policies:
+      Policies: 
         - DynamoDBCrudPolicy:
             TableName: "*"
       Environment:
