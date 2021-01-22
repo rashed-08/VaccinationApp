@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  VaccinationApp
+
+  Sample SAM Template for VaccinationApp
+  
+Globals:
+  Function:
+    Timeout: 30
+
+Parameters:
+  VaccinationTable:
+    Type: String
+    Default: VaccinationDB
+
+Resources:
+  VaccinationFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: vaccination/
+      Handler: app.postForm
+      Runtime: nodejs12.x
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "*"
+      Environment:
+        Variables:
+          DB_Table: !Ref VaccinationTable
+      Events:
+        Vaccination:
+          Type: Api 
+          Properties:
+            Path: /vaccination
+            Method: post
+  VaccinationDynamoDb:
+    Type: AWS::DynamoDB::Table 
+    Properties:
+      BillingMode: "PAY_PER_REQUEST"
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      TableName: VaccinationDB
+      
