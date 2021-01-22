@@ -33,11 +33,20 @@ exports.postForm = async (event, context) => {
         Item: vaccination
     }
 
+    console.log("Before dy")
+
     await dynamoDB.put(params, function(err, data) {
-        if (err) {
-            console.log("Error: ", err);
-        } else {
-            console.log("Success");
+        if (!err) {
+            console.log("data persisting!!!");
+            return {
+                "statusCode": 200,
+                "headers": {
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Credentials" : true,
+                    "Content-Type": "application/json"
+                },
+                "body": JSON.stringify("Successfully Submitted!")
+            }
         }
     });
 };
