@@ -7,7 +7,7 @@ Description: >
   
 Globals:
   Function:
-    Timeout: 30
+    Timeout: 60
 
 Parameters:
   VaccinationTable:
@@ -15,6 +15,14 @@ Parameters:
     Default: VaccinationDB
 
 Resources:
+  VaccinationApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+      Cors:
+        AllowMethods: "'*'"
+        AllowHeaders: "'*'"
+        AllowOrigin: "'*'"
   VaccinationFunction:
     Type: AWS::Serverless::Function 
     Properties:
@@ -33,6 +41,7 @@ Resources:
           Properties:
             Path: /vaccination
             Method: post
+            RestApiId: !Ref VaccinationApiGateway
   VaccinationDynamoDb:
     Type: AWS::DynamoDB::Table 
     Properties:
