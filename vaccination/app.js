@@ -41,7 +41,7 @@ exports.postForm = (event, context, callback) => {
             statusCode: 400,
             headers: {
                 "Access-Control-Allow-Origin": "*",
-                // "Access-Control-Allow-Credentials": "true"
+                "Access-Control-Allow-Credentials": true
             },
             body: JSON.stringify("Could Not Submit Your Form!")
         };
@@ -54,8 +54,8 @@ exports.postForm = (event, context, callback) => {
             statusCode: 200,
             headers: {
                 "Access-Control-Allow-Origin": "*",
-                'Content-Type': 'application/json'
-                // "Access-Control-Allow-Credentials": "true"
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Credentials": true
             },
             body: JSON.stringify("Vacciantion Form Successfully Submitted!")
         };
