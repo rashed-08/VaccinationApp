@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccination Information Request</title>
+    <link rel="nofollow" href=''>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="content">
+        <h2>Vaccination Information Request Form</h2>
+        <p class="info">
+            <span>The purpose of this form is to gather contact information for individuals wishing to receive the COVID-19 vaccine as it becomes available.  Currently, the COVID-19 vaccine is being rolled out to specific groups in phases defined by the New York State Department of Health [ <a href="https://justpaste.it/redirect/76cfh/https://covid19vaccine.health.ny.gov/phased-distribution-vaccine%23phase-1a">See if you are in a qualifying group</a> ].</span>
+        </p>
+        <p>
+            <b>This is not to pre-register for a COVID-19 vaccination appointment.</b> After you fill out the Vaccine Notification Request form, your information will be added to a County mailing list, and you will receive email updates from the Ulster County Department of Health and Mental Health as to when you may be eligible to receive the vaccine. If all appointments for vaccine distribution at the County-led PODs (points of dispensing) are full, you will receive subsequent emails when additional appointments become available including on how to register for an appointment.
+        </p>
+        <p>
+            The two Points Of Distribution for Ulster County are: 
+            <ul>
+                <li><b>Kate Walton Field House at Kingston High School</b></li>
+                <li><b>Ellenville Regional Hospital</b></li>
+            </ul>
+        </p>
+        <p>
+            <b>Please note:</b> The information you submit is for the sole purpose of gathering contact information to provide public outreach for the COVID-19 vaccine.  The information submitted on this form will not be disseminated to any outside entity other than the Ulster County Department of Health. The information you submit will remain private.
+        </p>
+
+        <form id="user-form">
+            <div class="left">
+                <label for="firstName">First Name</label>
+                <input type="text" name="firstName" required>
+            </div>
+            <div class="right">
+                <label for="address">Address</label>
+                <input type="text" name="address" required>
+            </div>
+            <div class="left">
+                <label for="middle">Middle Name</label>
+                <input type="text" name="middle">
+            </div>
+            <div class="right">
+                <label for="address2">Address 2</label>
+                <input type="text" name="address2" required>
+            </div>
+            <div class="left">
+                <label for="lastname">Last Name</label>
+                <input type="text" name="lastname" required>
+            </div>
+            <div class="right">
+                <label for="city">City</label>
+                <input type="text" name="city" required>
+            </div>
+            <div class="left">
+                <label for="dob">Date of Birth</label>
+                <input type="text" name="dob" required>
+            </div>
+            <div class="right">
+                <label for="state">State</label>
+                <input type="text" name="state" required>
+            </div>
+            <div class="left">
+                <label for="zip">Zip</label>
+                <input type="text" name="zip" required>
+            </div>
+            <div class="right">
+                <label for="country">Country</label>
+                <input type="text" name="country" required>
+            </div>
+            <div class="left">
+                <label for="email">Email</label>
+                <input type="text" name="email" required>
+            </div>
+            <p><input type="checkbox">I do not have an email</p>
+            <hr>
+            <div class="left">
+                <label for="car">Do you have a car, or suitable transportation to get to a Vaccination Site</label>
+                <p>
+                    <input type="radio" name="car" value="Yes" required> Yes <br>
+                    <input type="radio" name="car" value="No" required> No <br>
+                </p>
+            </div>
+            <div class="left">
+                <label for="worker">Are you an essential worker?</label>
+                <p>
+                    <input type="radio" name="worker" value="Yes" required> Yes <br>
+                    <input type="radio" name="worker" value="No" required> No <br>
+                </p>
+            </div>
+            <div class="left">
+                <label for="healthcar">Do you have a Healthcare Provider?</label>
+                <p>
+                    <input type="radio" name="healthcar" value="Yes" required> Yes <br>
+                    <input type="radio" name="healthcar" value="No" required> No <br>
+                </p>
+            </div>
+            <div class="left">
+                <label for="covid">Do you have a health condition that puts you in a high risk category for complications with COVID-19?</label>
+                <p>
+                    <input type="radio" name="covid" value="Yes" required> Yes <br>
+                    <input type="radio" name="covid" value="No" required> No <br>
+                </p>
+            </div>
+            <p><a class="conditional" href="https://justpaste.it/redirect/76cfh/https://www.cdc.gov/coronavirus/2019-ncov/need-extra-precautions/people-with-medical-conditions.html">Conditions of Increased Risk</a></p>
+            <hr>
+            <p><input type="checkbox">
+                I affirm that the information provided is accurate to the best of my knowledge.
+            </p>
+            <hr>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script src="./index.js"></script>
+</body>
+</html>
