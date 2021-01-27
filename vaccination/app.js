@@ -1,10 +1,11 @@
 const AWS = require('aws-sdk');
+const request = require('request')
+
 const dynamoDB = new AWS.DynamoDB.DocumentClient({
     region: 'us-east-2'
 });
 
 const { v4: uuidv4 } = require('uuid');
-
 
 const vaccinationTable = process.env.DB_Table;
 
@@ -26,11 +27,11 @@ exports.postForm = (event, context, callback) => {
         country: vaccinationForm.country,
         worker: vaccinationForm.worker,
         healthcar: vaccinationForm.healthcar,
-        covid: vaccinationForm.covid
+        covid: vaccinationForm.covid,
+        email: vaccinationForm.email
     };
 
     let response;
-    console.log('new');
     dynamoDB.put({
         TableName: vaccinationTable,
         Item: vaccination
@@ -49,7 +50,6 @@ exports.postForm = (event, context, callback) => {
         callback(null, response);
       }
       else {
-        console.log("success");
         response = {
             statusCode: 200,
             headers: {
@@ -64,94 +64,43 @@ exports.postForm = (event, context, callback) => {
         callback(null, response);
       }
     });
+
+    const firstname = vaccinationForm.firstName + vaccinationForm.middle;
+
+    const mcData = {
+        members: [
+            {
+                email_address: vaccinationForm.email,
+                status: "subscribed",
+                merge_fields: {
+                    FNAME: firstname,
+                    LNAME: vaccinationForm.lastname
+                }
+            }
+        ]
+    }
+
+    const mcDataPost = JSON.stringify(mcData);
+
+    const options = {
+        url: 'https://<dc>.api.mailchimp.com/3.0/lists/{list_id}',
+        method: 'POST',
+        headers: {
+            Authorization: 'auth api_key-us4'
+        },
+        body: mcDataPost
+    }
+
+    request(options, (err, response, body) => {
+        if (err) {
+            console.log('Failed to persist into Mailchimp');
+        } else {
+            if (response.statusCode === 200) {
+                console.log('Data persist to Mailchimp');
+            } else {
+                console.log('Could not persist to Mailchimp');
+            }    
+        }
+    });
     
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const AWS = require('aws-sdk')
-// var uuid = require('uuid')
-// const dynamoDB = new AWS.DynamoDB.DocumentClient({
-//     region: 'us-east-2'
-// });
-
-// const vaccinationTable = process.env.DB_Table;
-
-// exports.postForm = async (event, context) => {
-
-//     console.log(event.body);
-
-//     const vaccinationForm = JSON.parse(event.body)
-
-//     console.log("vaccination form: ", vaccinationForm);
-
-//     const vaccination = {
-//         id: uuid.v4(),
-//         firstName: vaccinationForm.firstName,
-//         middle: vaccinationForm.middle,
-//         lastname: vaccinationForm.lastname,
-//         address: vaccinationForm.address,
-//         address2: vaccinationForm.address2,
-//         city: vaccinationForm.city,
-//         dob: vaccinationForm.dob,
-//         state: vaccinationForm.state,
-//         zip: vaccinationForm.zip,
-//         country: vaccinationForm.country,
-//         worker: vaccinationForm.worker,
-//         healthcar: vaccinationForm.healthcar,
-//         covid: vaccinationForm.covid
-//     }
-
-//     const params = {
-//         TableName: vaccinationTable,
-//         Item: vaccination
-//     }
-
-//     console.log("Before dy")
-
-//     dynamoDB.put(params, function(err, data) {
-//         console.log("Error", err);
-//         console.log("Data: ", data);
-//         if (!err) {
-//             console.log("data persisting!!!");
-//             return {
-//                 "statusCode": 200,
-//                 "headers": {
-//                     "Access-Control-Allow-Origin" : "*",
-//                     "Access-Control-Allow-Credentials" : true,
-//                     "Content-Type": "application/json"
-//                 },
-//                 "body": JSON.stringify("Successfully Submitted!")
-//             }
-//         } else {
-//             console.log("Data not persisting!!!");
-//             return {
-//                 "body": JSON.stringify(err)
-//             }
-//         }
-//     });
-// };
